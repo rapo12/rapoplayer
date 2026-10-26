@@ -1,0 +1,5 @@
+#EXTM3U
+# Replace the URL below with media you are authorized to use, then serve this
+# playlist over HTTPS. No test media is included or automatically contacted.
+#EXTINF:-1 tvg-id="test.live" group-title="Test",Authorized test stream
+https://media.example.invalid/REPLACE_WITH_AUTHORIZED_HLS/master.m3u8

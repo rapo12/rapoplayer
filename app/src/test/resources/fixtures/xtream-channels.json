@@ -1,0 +1,7 @@
+[
+  {"stream_id":1,"name":"Synthetic One","stream_type":"live","category_id":"10","epg_channel_id":"news.test","stream_icon":null,"container_extension":"ts"},
+  {"stream_id":"2","name":"Synthetic Two","category_id":null,"direct_source":"https://cdn.example.invalid/channel/index.m3u8?token=placeholder"},
+  {"stream_id":"3","name":"Excluded movie","stream_type":"movie"},
+  {"name":"Missing identity"},
+  {"stream_id":1,"name":"Duplicate ignored"}
+]

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Provider hosts are supplied at runtime, so a fixed domain allowlist cannot
+         cover them. Only explicit HTTP(S) URLs enter the shared OkHttp transport;
+         SafeRedirects rejects downgrades and unrelated redirect destinations. -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors><certificates src="system" /></trust-anchors>
+    </base-config>
+</network-security-config>

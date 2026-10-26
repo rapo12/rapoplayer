@@ -1,0 +1,9 @@
+<resources>
+    <style name="Theme.Rapo" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowBackground">#111719</item>
+        <item name="android:colorAccent">#5DE0C3</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+</resources>

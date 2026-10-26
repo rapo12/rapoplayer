@@ -1,0 +1,13 @@
+{
+  "m3u": {
+    "displayName": "My authorized live source",
+    "playlistUrl": "https://provider.example.invalid/playlist.m3u?token=PLACEHOLDER",
+    "xmltvUrl": "https://provider.example.invalid/guide.xml"
+  },
+  "xtream": {
+    "serverUrl": "https://provider.example.invalid/base/",
+    "username": "PLACEHOLDER_USERNAME",
+    "password": "PLACEHOLDER_PASSWORD",
+    "output": "m3u8"
+  }
+}

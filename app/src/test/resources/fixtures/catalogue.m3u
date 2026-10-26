@@ -1,0 +1,15 @@
+﻿#EXTM3U
+#EXTINF:-1 tvg-id="news.test" tvg-name="Fallback" tvg-logo="/logos/news.png" group-title="News, local",أخبار Test
+../live/news.m3u8?token=placeholder
+#EXTINF:-1 group-title="",No guide channel
+https://media.example.invalid/live/2.ts
+#EXTINF:-1 tvg-id="duplicate",East
+/east.m3u8
+#EXTINF:-1 tvg-id="duplicate",West
+/west.m3u8
+#EXTINF:120 type="vod",Excluded film
+/film.mp4
+#EXTINF:-1,HTTP entry
+http://media.example.invalid/live.ts
+#EXTINF:-1,Malformed entry
+rtsp://media.example.invalid/live

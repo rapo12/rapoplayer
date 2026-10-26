@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tv>
+  <channel id="news.test"><display-name>Different display name</display-name></channel>
+  <programme channel="news.test" start="20261025013000 +0200" stop="20261025023000 +0200"><title>Before clock change</title></programme>
+  <programme channel="news.test" start="20261025023000 +0100" stop="20261025033000 +0100"><title>After clock change</title></programme>
+  <programme channel="unknown" start="20261025120000 +0000" stop="20261025130000 +0000"><title>Unmatched</title></programme>
+  <programme channel="news.test" start="bad" stop="bad"><title>Invalid time</title></programme>
+</tv>
