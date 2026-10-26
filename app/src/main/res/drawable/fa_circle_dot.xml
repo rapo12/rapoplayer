@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->
+<!-- Source: https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.7.2/svgs/solid/circle-dot.svg
+     Converted to Android VectorDrawable; centered in a square viewport. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="512" android:viewportHeight="512">
+    <group android:translateX="0" android:translateY="0">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-352a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" />
+    </group>
+</vector>

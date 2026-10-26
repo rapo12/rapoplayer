@@ -1,6 +1,7 @@
 package com.rapoplayer.tv.ui
 
 import android.view.Gravity
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,6 +14,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,15 +42,46 @@ val Muted = Color(0xFFA6B5B6)
     }
 }
 @Composable fun Action(text: String, onClick: () -> Unit, modifier: Modifier = Modifier,
-                       selected: Boolean = false, enabled: Boolean = true, onFocus: (() -> Unit)? = null) {
-    Button(onClick = onClick, enabled = enabled,
-        modifier = modifier.heightIn(min = 44.dp).onFocusChanged { if (it.isFocused) onFocus?.invoke() },
-        scale = ButtonDefaults.scale(focusedScale = 1.025f),
-        colors = ButtonDefaults.colors(containerColor = if (selected) Color(0xFF2A3B3C) else Panel,
-            contentColor = WarmWhite, focusedContainerColor = Accent, focusedContentColor = Background)) {
-        Text(if (selected) stringResource(R.string.selected_label, text) else text,
+                       selected: Boolean? = null, enabled: Boolean = true, onFocus: (() -> Unit)? = null,
+                       icon: RapoGlyph? = null) {
+    ActionButton(onClick, modifier, selected, enabled, onFocus) {
+        val glyph = icon ?: RapoGlyph.Check.takeIf { selected == true }
+        if (glyph != null) {
+            RapoIcon(glyph)
+            Spacer(Modifier.width(10.dp))
+        }
+        Text(text, modifier = Modifier.weight(1f, fill = false),
             color = androidx.tv.material3.LocalContentColor.current, fontSize = 16.sp, maxLines = 2)
+        if (selected == true && icon != null) {
+            Spacer(Modifier.width(8.dp))
+            RapoIcon(RapoGlyph.Check, size = IconSizes.Status)
+        }
     }
+}
+
+/** The localized accessible name is required even though the visible control is compact. */
+@Composable fun IconAction(@StringRes label: Int, icon: RapoGlyph, onClick: () -> Unit,
+                          modifier: Modifier = Modifier, enabled: Boolean = true) {
+    ActionButton(onClick, modifier.sizeIn(minWidth = 52.dp, minHeight = 52.dp), null, enabled, null, iconOnly = true) {
+        RapoIcon(icon, description = stringResource(label), size = IconSizes.Transport)
+    }
+}
+
+@Composable private fun ActionButton(onClick: () -> Unit, modifier: Modifier, selection: Boolean?,
+                                    enabled: Boolean, onFocus: (() -> Unit)?, iconOnly: Boolean = false,
+                                    content: @Composable RowScope.() -> Unit) {
+    Button(onClick = onClick, enabled = enabled,
+        modifier = modifier.heightIn(min = 48.dp)
+            .semantics { selection?.let { selected = it } }
+            .onFocusChanged { if (it.isFocused) onFocus?.invoke() },
+        contentPadding = if (iconOnly) PaddingValues(12.dp) else PaddingValues(horizontal = 16.dp, vertical = 10.dp),
+        scale = ButtonDefaults.scale(focusedScale = 1.025f),
+        colors = ButtonDefaults.colors(containerColor = if (selection == true) Color(0xFF2A3B3C) else Panel,
+            contentColor = if (selection == true) Accent else WarmWhite,
+            focusedContainerColor = Accent, focusedContentColor = Background,
+            pressedContainerColor = Accent, pressedContentColor = Background,
+            disabledContainerColor = Panel.copy(alpha = .6f), disabledContentColor = Muted),
+        content = content)
 }
 @Composable fun Brand(compact: Boolean = false) {
     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {

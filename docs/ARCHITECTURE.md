@@ -117,3 +117,24 @@ Compose animations. They use the normal system motion-duration scale, including
 zero; no outgoing player/screen is kept alive for a crossfade. Loading text changes
 share the short entrance timing, while Material progress indicators remain bounded
 in size. No new dependencies were introduced.
+
+## Native icon assets
+
+`RapoGlyph` maps a pinned subset of 39 Font Awesome Free 6.7.2 Solid drawings to
+local Android VectorDrawables. `RapoIcon` supplies consistent 24 dp action icons,
+16 dp status markers and a 28 dp primary player control. Square viewports center
+the original geometry without stretching wide or narrow icons. The back arrow
+supports RTL mirroring. The app's R brand and channel artwork remain separate.
+
+`Action` and `IconAction` share one TV button implementation: 48 dp minimum
+labeled targets and a 52 dp compact control. Icons inherit the same enabled,
+focused, pressed, selected and disabled content colors as their labels. Selection
+uses a Font Awesome check plus semantic selected state, rather than a Unicode
+prefix. Decorative icons have no duplicate accessibility label or focus target;
+the icon-only play/pause button requires a localized label resource. Input icons
+are decoration and do not change keyboard/focus handling.
+
+All paths and the upstream license ship in the APK; rendering and the license
+reader need no network. CC BY 4.0 attribution is visible before connecting a source
+and in About. `scripts/vendor-fontawesome.py` is an optional maintenance command,
+never a build step. See [third-party notices](../THIRD_PARTY_NOTICES.md).

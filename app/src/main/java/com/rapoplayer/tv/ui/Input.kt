@@ -38,6 +38,7 @@ fun Input(
     transformation: VisualTransformation = VisualTransformation.None,
     error: String? = null,
     placeholder: String? = null,
+    icon: RapoGlyph? = null,
 ) {
     // Never use rememberTextFieldState/rememberSaveable here: passwords, PINs and
     // token-bearing URLs must not be written into saved-instance state.
@@ -144,6 +145,9 @@ fun Input(
     }
     val supporting: (@Composable () -> Unit)? = error?.let { message -> { Text(message, fontSize = 14.sp) } }
     val placeholderContent: (@Composable () -> Unit)? = placeholder?.let { hintText -> { Text(hintText, color = Muted, fontSize = 16.sp) } }
+    val leading: (@Composable () -> Unit)? = icon?.let { glyph -> {
+        RapoIcon(glyph, tint = if (error != null) Color(0xFFFFC8B4) else if (focused) Accent else Muted)
+    } }
     val secure = keyboard == KeyboardType.Password || keyboard == KeyboardType.NumberPassword
     if (secure) {
         OutlinedSecureTextField(
@@ -151,7 +155,7 @@ fun Input(
             textStyle = LocalTextStyle.current.copy(fontSize = 18.sp),
             keyboardOptions = options, onKeyboardAction = { finishEditing() },
             textObfuscationMode = if (transformation is PasswordVisualTransformation) TextObfuscationMode.Hidden else TextObfuscationMode.Visible,
-            trailingIcon = hint, supportingText = supporting, placeholder = placeholderContent,
+            leadingIcon = leading, trailingIcon = hint, supportingText = supporting, placeholder = placeholderContent,
             isError = error != null, colors = colors,
         )
     } else {
@@ -160,7 +164,7 @@ fun Input(
             textStyle = LocalTextStyle.current.copy(fontSize = 18.sp),
             lineLimits = TextFieldLineLimits.SingleLine,
             keyboardOptions = options, onKeyboardAction = { finishEditing() },
-            trailingIcon = hint, supportingText = supporting, placeholder = placeholderContent,
+            leadingIcon = leading, trailingIcon = hint, supportingText = supporting, placeholder = placeholderContent,
             isError = error != null, colors = colors,
         )
     }

@@ -30,6 +30,7 @@ import androidx.media3.ui.PlayerView
 import com.rapoplayer.tv.R
 import kotlinx.coroutines.delay
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable fun PlaybackScreen(model: MainViewModel, state: UiState) {
     val channel = state.playing ?: return
     val playback by model.playback.state.collectAsStateWithLifecycle()
@@ -98,16 +99,16 @@ import kotlinx.coroutines.delay
         if (state.suspended) Column(Modifier.align(Alignment.Center).background(Background).padding(28.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)) {
             Text(stringResource(R.string.resume_notice), color = WarmWhite, fontSize = 22.sp)
-            Action(stringResource(R.string.resume_playback), model::resumePlayback, Modifier.focusRequester(recoveryFocus))
-            Action(stringResource(R.string.back), model::leavePlayback)
+            Action(stringResource(R.string.resume_playback), model::resumePlayback, Modifier.focusRequester(recoveryFocus), icon = RapoGlyph.Play)
+            Action(stringResource(R.string.back), model::leavePlayback, icon = RapoGlyph.Back)
         }
         if (playback.error != null || state.failure != null) Column(Modifier.align(Alignment.Center).widthIn(max = 600.dp)
             .background(Background).padding(28.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
             FailureText(playback.error ?: state.failure!!)
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Action(stringResource(R.string.retry), { model.watch(channel) }, Modifier.focusRequester(recoveryFocus))
-                Action(stringResource(R.string.next_channel), { model.switchChannel(1) })
-                Action(stringResource(R.string.back), model::leavePlayback)
+                Action(stringResource(R.string.retry), { model.watch(channel) }, Modifier.focusRequester(recoveryFocus), icon = RapoGlyph.Refresh)
+                Action(stringResource(R.string.next_channel), { model.switchChannel(1) }, icon = RapoGlyph.Next)
+                Action(stringResource(R.string.back), model::leavePlayback, icon = RapoGlyph.Back)
             }
         }
         if (controls && !state.suspended) Column(Modifier.align(Alignment.BottomCenter).fillMaxWidth()
@@ -115,25 +116,29 @@ import kotlinx.coroutines.delay
             .padding(horizontal = 30.dp, vertical = 22.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(channel.name, color = WarmWhite, fontSize = 28.sp)
             Row(horizontalArrangement = Arrangement.spacedBy(18.dp)) {
-                Text(if (playback.live) stringResource(R.string.live) else stringResource(R.string.app_name), color = Accent, fontSize = 14.sp)
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    RapoIcon(if (playback.live) RapoGlyph.Live else RapoGlyph.Television, tint = Accent, size = IconSizes.Status)
+                    Text(if (playback.live) stringResource(R.string.live) else stringResource(R.string.app_name), color = Accent, fontSize = 14.sp)
+                }
                 if (playback.recoveredLive) Text(stringResource(R.string.live_recovered), color = Muted, fontSize = 14.sp)
                 if (!playback.playing && playback.ready) Text(stringResource(R.string.paused), color = Muted, fontSize = 14.sp)
             }
             if (state.guide.isNotEmpty()) Text(state.guide.firstOrNull { it.start <= System.currentTimeMillis() && it.end > System.currentTimeMillis() }?.title.orEmpty(), color = WarmWhite, fontSize = 18.sp)
             if (playback.unsupportedTracks) Text(stringResource(R.string.unsupported_tracks), color = Muted, fontSize = 14.sp)
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Action(stringResource(if (playback.playing) R.string.pause else R.string.resume), model.playback::togglePause,
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
+                IconAction(if (playback.playing) R.string.pause else R.string.resume,
+                    if (playback.playing) RapoGlyph.Pause else RapoGlyph.Play, model.playback::togglePause,
                     Modifier.focusRequester(firstControl), enabled = playback.ready)
-                Action(stringResource(R.string.previous_channel), { model.switchChannel(-1) })
-                Action(stringResource(R.string.next_channel), { model.switchChannel(1) })
-                Action(stringResource(if (actual.favorite) R.string.favorite_remove else R.string.favorite_add), { model.favorite(actual) })
+                Action(stringResource(R.string.previous_channel), { model.switchChannel(-1) }, icon = RapoGlyph.Previous)
+                Action(stringResource(R.string.next_channel), { model.switchChannel(1) }, icon = RapoGlyph.Next)
+                Action(stringResource(if (actual.favorite) R.string.favorite_remove else R.string.favorite_add), { model.favorite(actual) }, selected = actual.favorite, icon = RapoGlyph.Favorite)
             }
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                if (playback.live) Action(stringResource(R.string.return_live), model.playback::liveEdge)
-                if (playback.audio.size > 1) Action(stringResource(R.string.audio_tracks), { tracks = C.TRACK_TYPE_AUDIO })
-                if (playback.subtitles.isNotEmpty()) Action(stringResource(R.string.subtitle_tracks), { tracks = C.TRACK_TYPE_TEXT })
-                Action(stringResource(if (state.preferences.fill) R.string.fill else R.string.fit), { model.preferences(state.preferences.copy(fill = !state.preferences.fill)) })
-                Action(stringResource(R.string.hide_controls), { controls = false; root.requestFocus() })
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                if (playback.live) Action(stringResource(R.string.return_live), model.playback::liveEdge, icon = RapoGlyph.Live)
+                if (playback.audio.size > 1) Action(stringResource(R.string.audio_tracks), { tracks = C.TRACK_TYPE_AUDIO }, icon = RapoGlyph.Audio)
+                if (playback.subtitles.isNotEmpty()) Action(stringResource(R.string.subtitle_tracks), { tracks = C.TRACK_TYPE_TEXT }, icon = RapoGlyph.Subtitles)
+                Action(stringResource(if (state.preferences.fill) R.string.fill else R.string.fit), { model.preferences(state.preferences.copy(fill = !state.preferences.fill)) }, icon = if (state.preferences.fill) RapoGlyph.Fill else RapoGlyph.Fit)
+                Action(stringResource(R.string.hide_controls), { controls = false; root.requestFocus() }, icon = RapoGlyph.Hide)
             }
             Text(stringResource(R.string.playback_controls_hint), color = Muted, fontSize = 12.sp)
         }
@@ -142,13 +147,13 @@ import kotlinx.coroutines.delay
             val choices = if (type == C.TRACK_TYPE_AUDIO) playback.audio else playback.subtitles
             Modal(stringResource(if (type == C.TRACK_TYPE_AUDIO) R.string.audio_tracks else R.string.subtitle_tracks), { tracks = null }) {
                 LazyColumn(Modifier.weight(1f, fill = false), verticalArrangement = Arrangement.spacedBy(10.dp), contentPadding = PaddingValues(4.dp)) {
-                    item { Action(stringResource(if (type == C.TRACK_TYPE_TEXT) R.string.off else R.string.automatic), { model.playback.choose(type, null); tracks = null }) }
+                    item { Action(stringResource(if (type == C.TRACK_TYPE_TEXT) R.string.off else R.string.automatic), { model.playback.choose(type, null); tracks = null }, icon = if (type == C.TRACK_TYPE_TEXT) RapoGlyph.Subtitles else RapoGlyph.Audio) }
                     itemsIndexed(choices) { index, choice ->
                         val label = choice.label?.takeIf { it.isNotBlank() } ?: choice.language?.takeIf { it.isNotBlank() } ?: stringResource(R.string.track_number, index + 1)
                         Action(label, { model.playback.choose(type, choice); tracks = null }, Modifier.fillMaxWidth(), selected = choice.selected)
                     }
                 }
-                Action(stringResource(R.string.back), { tracks = null })
+                Action(stringResource(R.string.back), { tracks = null }, icon = RapoGlyph.Back)
             }
         }
     }

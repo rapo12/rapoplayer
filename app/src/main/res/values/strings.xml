@@ -61,8 +61,7 @@
     <string name="watch">Watch channel</string>
     <string name="favorite_add">Add favorite</string>
     <string name="favorite_remove">Remove favorite</string>
-    <string name="favorite_marker">★ Favorite</string>
-    <string name="selected_label">✓ %1$s</string>
+    <string name="favorite_marker">Favorite</string>
     <string name="locked">Locked channel</string>
     <string name="unlock_watch">Unlock and watch</string>
     <string name="select_channel">Your next programme awaits.</string>
@@ -102,6 +101,11 @@
     <string name="unlock_action">Unlock: %1$s</string>
     <string name="session_expired">Please enter your PIN again to change restrictions.</string>
     <string name="about">About and diagnostics</string>
+    <string name="icon_licenses">Icon licenses</string>
+    <string name="fa_attribution">Font Awesome Free 6.7.2 Solid icons by Fonticons, Inc. — CC BY 4.0. Converted to Android vectors with centered viewports.</string>
+    <string name="license_unavailable">License text is unavailable.</string>
+    <string name="license_scroll_up">Page up</string>
+    <string name="license_scroll_down">Page down</string>
     <string name="about_version">RAPOPLAYER %1$s · Android TV</string>
     <string name="format_notice">Playback targets: HTTP/HTTPS HLS and MPEG-TS, H.264 video and AAC audio. Prefer HTTPS. Device and provider compatibility require testing. No recording, catch-up, or persistent timeshift.</string>
     <string name="buffering">Loading live stream…</string>

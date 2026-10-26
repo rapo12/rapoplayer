@@ -13,9 +13,10 @@
 - [x] Security/data-integrity/network regression tests; 32 JVM tests pass.
 - [x] Reproducible debug APK and release documentation.
 - [x] Full build and lint after corrections: 32 JVM tests, 0 lint errors.
-- [x] Twelve Android TV API 36 emulator tests, including keyboard/focus, form validation, HTTP transport, D-pad journey and player lifecycle.
+- [x] Fifteen Android TV API 36 emulator tests, including keyboard/focus, form validation, HTTP transport, D-pad journey, icons and player lifecycle.
 - [x] Explicit HTTP/HTTPS support with normal TLS validation and restricted redirects.
 - [x] Shared input editing behavior, floating-keyboard scrolling, and system-scaled TV motion.
+- [x] Locally bundled Font Awesome Free vectors, shared state colors and sizing, accessible icon-only controls, and offline license reader; three icon tests also pass with app networking blocked and animations disabled.
 - [ ] Physical-device streaming qualification (requires hardware and authorized media).
 
 Release qualification is blocked on access to agreed physical TV devices and

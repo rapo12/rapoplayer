@@ -40,6 +40,11 @@ keyboards that report a zero-height inset, as well as Back ordering. It uses a
 long scrollable form and requires the last input to be fully visible above the
 floating keyboard after the dialog resizes.
 
+IconUiTest loads every bundled Font Awesome vector through Android resources,
+checks the local license, and exercises labeled/selected/disabled/icon-only
+semantics, remote activation and license-reader paging/Back focus restoration.
+It captures synthetic button-state images for visual inspection.
+
 ## Manual remote acceptance
 
 Use only Up/Down/Left/Right/OK/Back first. Repeat with media/channel keys when
@@ -75,6 +80,11 @@ Do not put provider URLs or credentials into screenshots, logcats or bug reports
    setting. Check focus and loading feedback on a lower-powered TV; verify source
    forms remain visible and scroll correctly with the vendor keyboard open,
    especially when editing the last field with a floating keyboard.
+10. Inspect Font Awesome icons from normal TV viewing distance at 720p, 1080p and
+    4K. Check normal, focused, selected, pressed and disabled contrast; large text,
+    RTL back-arrow direction and wrapped settings/player controls. Verify play/pause
+    is announced correctly by TalkBack and every icon-only target has a name.
+    With networking unavailable, open Icon licenses and page with the remote.
 
 ## Playback qualification (physical TV required)
 

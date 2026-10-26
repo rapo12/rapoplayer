@@ -10,7 +10,7 @@ Android 9/API 28 minimum; compile and target API 36. English resources initially
 ![Android TV emulator with a synthetic catalogue](docs/screenshots/browser.png)
 
 The screenshot uses test fixtures, not bundled content. Validation currently
-includes 32 JVM tests and 12 Android TV emulator tests. Physical playback
+includes 32 JVM tests and 15 Android TV emulator tests. Physical playback
 qualification remains required; see the exact [verification record](docs/TEST_RESULTS.md).
 Additional emulator screenshots: [Welcome](docs/screenshots/welcome.png) ·
 [Source setup](docs/screenshots/source-remote-focus.png).
@@ -104,6 +104,13 @@ credentials as well as restrictions. Deleting a source through the app requires
 the PIN and retains the household PIN for the next setup.
 
 ## Validation and release state
+
+The native UI uses a local subset of Font Awesome Free 6.7.2 Solid icons as
+Android vectors. Search, navigation, favorites, source setup, settings and player
+controls share the same sizing and state colors; no icon font, CDN or runtime
+dependency is used. Credits and the bundled license are available offline from
+Welcome and Settings → About and diagnostics → Icon licenses.
+See [third-party notices](THIRD_PARTY_NOTICES.md).
 
 See [`docs/TEST_RESULTS.md`](docs/TEST_RESULTS.md) for the exact executed checks,
 [`docs/CHECKLIST.md`](docs/CHECKLIST.md) for implementation status and
